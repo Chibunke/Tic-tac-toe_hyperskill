@@ -1,0 +1,127 @@
+def game():
+    from random import choice
+    win = False
+    player = ''
+    a = '_________'
+
+    def game_bord():
+        return '''
+           
+        ---------
+        | {} {} {} |
+        | {} {} {} |
+        | {} {} {} |
+       ----------'''.format(a[0], a[1], a[2], a[3], a[4], a[5], a[6],a[7], a[8])
+    print(game_bord())
+
+
+    o = 0
+    s = 0
+    turn = choice('so')
+    if turn == 'o':
+        o += 1
+        print('O will play first')
+    elif turn == 's':
+        s += 1
+        print('X will play first')
+
+
+
+    while True:
+        if o:player = 'O';o -= 1;s += 1
+
+        else:player = 'X';s -= 1;o += 1
+
+
+
+
+
+
+        def coordinate():
+            while player:
+                nonlocal a
+                x, y = input('Enter the coordinates:').split()
+                # to check if our input(coordinate) are numbers
+                try:int(x) and int(y)
+                except ValueError:print('You should enter numbers!');continue
+                # to check if our input(coordinate) are in range 1 to 3
+                if int(x) not in range(1, 4) or int(y) not in range(1, 4):print('Coordinates should be from 1 to 3!');continue
+
+
+                def occupied_cell():
+
+                    print('This cell is occupied! Choose another one!')
+                    coordinate()
+
+
+
+                # the input is a good coordinate to work with, processing the coordinate/position
+
+                a_ =[x, y]
+                if a_ == list('13'):
+                    if a[0] == '_':a = list(a);a[0] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+
+                elif a_ == list('23'):
+                    if a[1] == '_':a = list(a);a[1] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+
+                elif a_ == list('33'):
+                    if a[2] == '_':a = list(a);a[2] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+
+                elif a_ == list('12'):
+                    if a[3] == '_':a = list(a);a[3] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+                elif a_ == list('22'):
+                    if a[4] == '_':a = list(a);a[4] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+                elif a_ == list('32'):
+                    if a[5] == '_':a = list(a);a[5] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+                elif a_ == list('11'):
+                    if a[6] == '_':a = list(a);a[6] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+                elif a_ == list('21'):
+                    if a[7] == '_':a = list(a);a[7] = player;''.join(a);print(game_bord())
+                    else:occupied_cell()
+                elif a_ == list('31'):
+                    if a[8] == '_':a = list(a);a[8] = player;''.join(a);print(game_bord());
+                    else:occupied_cell()
+                break
+
+        coordinate()
+        # wining conditions
+        def winner():
+            if win:
+
+                print(player, "wins")
+                
+
+
+        # vertical win
+        a = list(a)
+        if a[0] == a[3] == a[6] == player:win = True;winner();break
+        elif a[1] == a[4] == a[7] == player:win = True;winner();break
+        elif a[2] == a[5] == a[8] == player:win = True;winner();break
+        # horizontal win
+        elif a[0] == a[1] == a[2] == player:win = True;winner();break
+        elif a[3] == a[4] == a[5] == player:win = True;winner();break
+        elif a[6] == a[7] == a[8] == player:win = True;winner();break
+        # diagonal win
+        elif a[6] == a[4] == a[2] == player:win = True;winner();break
+        elif a[0] == a[4] == a[8] == player:win = True;winner();break
+
+
+        blanks = a.count('_')
+        if blanks == 0:
+            if not win:
+                print('Draw')
+            break
+        continue
+
+
+
+
+
+game()
