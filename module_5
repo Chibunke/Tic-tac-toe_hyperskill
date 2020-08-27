@@ -6,24 +6,22 @@ def game():
 
     def game_bord():
         return '''
-           
-        ---------
-        | {} {} {} |
-        | {} {} {} |
-        | {} {} {} |
-       ----------'''.format(a[0], a[1], a[2], a[3], a[4], a[5], a[6],a[7], a[8])
+           1  2  3
+          ---------
+        3 | {} {} {} |
+        2 | {} {} {} |
+        1 | {} {} {} |
+          ---------'''.format(a[0], a[1], a[2], a[3], a[4], a[5], a[6],a[7], a[8])
     print(game_bord())
 
-
+    # this is to chose who will play first
+    # s = x's turn o = o's turn
     o = 0
+
     s = 0
     turn = choice('so')
-    if turn == 'o':
-        o += 1
-        print('O will play first')
-    elif turn == 's':
-        s += 1
-        print('X will play first')
+    if turn == 'o':o += 1;print('O will play first')
+    elif turn == 's':s += 1;print('X will play first')
 
 
 
@@ -40,22 +38,29 @@ def game():
         def coordinate():
             while player:
                 nonlocal a
-                x, y = input('Enter the coordinates:').split()
+
+
+                coo_=input('Enter the coordinates {}:'.format(player))
+                #to count the number of inputs
+                reply = 'you should enter two coordinate, example:1 1  or 2 3 or 3 3'
+                if (len(coo_.split())) != 2:print(reply);continue
+                else:x,y = coo_.split()
+                # to check if our input coordinate is good to work with
                 # to check if our input(coordinate) are numbers
                 try:int(x) and int(y)
                 except ValueError:print('You should enter numbers!');continue
                 # to check if our input(coordinate) are in range 1 to 3
-                if int(x) not in range(1, 4) or int(y) not in range(1, 4):print('Coordinates should be from 1 to 3!');continue
+                coo_range = 'Coordinates should be from 1 to 3!'
+                if int(x) not in range(1, 4) or int(y) not in range(1, 4):print(coo_range);continue
 
 
                 def occupied_cell():
 
-                    print('This cell is occupied! Choose another one!')
-                    coordinate()
+                    print('This cell is occupied! Choose another one!');coordinate()
 
 
 
-                # the input is a good coordinate to work with, processing the coordinate/position
+                # if the  input is a good coordinate to work with, processing the coordinate/position
 
                 a_ =[x, y]
                 if a_ == list('13'):
@@ -93,14 +98,11 @@ def game():
         coordinate()
         # wining conditions
         def winner():
-            if win:
-
-                print(player, "wins")
-                
+            if win:print(player, "wins")
 
 
         # vertical win
-        a = list(a)
+        #a = list(a)
         if a[0] == a[3] == a[6] == player:win = True;winner();break
         elif a[1] == a[4] == a[7] == player:win = True;winner();break
         elif a[2] == a[5] == a[8] == player:win = True;winner();break
@@ -112,16 +114,16 @@ def game():
         elif a[6] == a[4] == a[2] == player:win = True;winner();break
         elif a[0] == a[4] == a[8] == player:win = True;winner();break
 
-
+        # for draw conditions
         blanks = a.count('_')
         if blanks == 0:
-            if not win:
-                print('Draw')
-            break
+            if not win:print('Draw');break
         continue
 
-
-
-
-
 game()
+while True:
+    ans = input('Would you like to play again ? Enter y for Yes and n for No: ')
+    print(ans)
+    if ans == 'y':game()
+    elif ans == 'n':break
+    else:continue
